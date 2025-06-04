@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'lkss-*'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v3
+
+    - name: Set default configuration
+      run: |
+        make freescale_imx93frdm_lkss_defconfig
+
+    - name: Build rootfs
+      run: |
+        make -j"$(nproc)"
+
+    - name: Upload artifact
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: rootfs-artifact
+        path: output/images/rootfs.ext2
+
+    - name: Create release
+      if: startsWith(github.ref, 'refs/tags/lkss-')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: output/images/rootfs.ext2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
