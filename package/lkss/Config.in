@@ -1,0 +1,4 @@
+config BR2_PACKAGE_LKSS
+	bool "Linux Kernel Summer School (LKSS) package"
+	help
+	  LKSS tools used for testing the labs.
