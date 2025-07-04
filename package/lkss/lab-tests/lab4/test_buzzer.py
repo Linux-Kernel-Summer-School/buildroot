@@ -14,6 +14,20 @@ CDEV_MINOR = 0
 
 # note frequency map (in hertz)
 NOTE_FREQUENCIES = {
+	"DO2": 65.41,
+	"RE2": 73.42,
+	"MI2": 82.41,
+	"FA2": 87.31,
+	"SOL2": 98.00,
+	"LA2": 110.00,
+	"SI2": 123.47,
+	"DO3": 130.81,
+	"RE3": 146.83,
+	"MI3": 164.81,
+	"FA3": 174.61,
+	"SOL3": 196.00,
+	"LA3": 220.00,
+	"SI3": 246.94,
 	"DO4": 261.63,
 	"RE4": 293.66,
 	"MI4": 329.63,
@@ -21,6 +35,7 @@ NOTE_FREQUENCIES = {
 	"SOL4": 392,
 	"LA4": 440,
 	"SI4": 493.88,
+	"REST": 0,
 }
 
 # note durations (in beats)
@@ -172,7 +187,7 @@ class BuzzerSong:
 		return notes
 
 	def write_packed(self, filename):
-		print("Flushing song to device...")
+		print("Flushing song to device")
 
 		song = struct.pack("@II", self.bpm, len(self.notes))
 
@@ -181,8 +196,6 @@ class BuzzerSong:
 
 		with open(filename, "wb") as fd:
 			fd.write(song)
-
-		print("Ready! Enjoy the music :)!")
 
 	def __str__(self):
 		song = ""
