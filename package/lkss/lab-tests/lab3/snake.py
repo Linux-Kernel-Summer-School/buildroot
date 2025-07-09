@@ -42,6 +42,7 @@ def main():
 
     direction = 'RIGHT'
     directions = {UP:'UP', DOWN:'DOWN', LEFT:'LEFT', RIGHT:'RIGHT'}
+    reverse = {'UP':'DOWN', 'DOWN':'UP', 'LEFT':'RIGHT', 'RIGHT':'LEFT'}
 
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
@@ -62,7 +63,9 @@ def main():
         while True:
             key = get_key(snake_dev)
             if key in directions:
-                direction = directions[key]
+                new_direction = directions[key]
+                if reverse[new_direction] != direction:
+                    direction = new_direction
 
             head = snake[0].copy()
             if direction == 'UP':
