@@ -29,12 +29,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: rootfs-artifact
-        path: output/images/rootfs.ext2
+        path: |
+          output/images/rootfs.ext2
+          output/images/imx9-boot-sd.bin
 
     - name: Create release
       if: startsWith(github.ref, 'refs/tags/lkss-')
       uses: softprops/action-gh-release@v1
       with:
-        files: output/images/rootfs.ext2
+        files: |
+          output/images/rootfs.ext2
+          output/images/imx9-boot-sd.bin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
